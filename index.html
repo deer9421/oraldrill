@@ -107,61 +107,64 @@ button:hover {
 
     // Function to update dice configuration based on user input
     function updateDiceConfiguration() {
-        const diceContainer = document.getElementById('diceContainer');
-        diceContainer.innerHTML = '';
-        const numDice = document.getElementById('numDice').value;
+    const diceContainer = document.getElementById('diceContainer');
+    diceContainer.innerHTML = '';
+    const numDice = document.getElementById('numDice').value;
 
-        for (let i = 0; i < numDice; i++) {
-            const div = document.createElement('div');
-            div.className = 'words-input';
+    for (let i = 0; i < numDice; i++) {
+        const div = document.createElement('div');
+        div.className = 'words-input';
 
-            const label1 = document.createElement('label');
-            label1.textContent = `단어 ${i + 1}:`;
-            const input1 = document.createElement('input');
-            input1.type = 'text';
-            input1.className = 'word-input';
-            input1.placeholder = '여기에 단어를 입력하세요';
+        const label1 = document.createElement('label');
+        label1.textContent = `단어 ${i + 1}:`;
+        const input1 = document.createElement('input');
+        input1.type = 'text';
+        input1.className = 'word-input';
+        input1.placeholder = '여기에 단어를 입력하세요';
 
-            div.appendChild(label1);
-            div.appendChild(input1);
+        div.appendChild(label1);
+        div.appendChild(input1);
 
-            if (i === numDice - 1) { // Last 단어
-                const label2 = document.createElement('label');
-                label2.textContent = `질문형 포함:`;
-                label2.style.display = 'block';
-                label2.style.marginLeft = '20px';
+        if (i === numDice - 1) { // Last 단어
+            const label2 = document.createElement('label');
+            label2.textContent = `질문형:`;
+            label2.style.display = 'block';
+            label2.style.marginLeft = '20px';
 
-                const input2 = document.createElement('input');
-                input2.type = 'checkbox';
-                input2.className = 'question-checkbox';
-                input2.style.marginLeft = '20px';
+            const input2 = document.createElement('input');
+            input2.type = 'checkbox';
+            input2.className = 'question-checkbox';
+            input2.style.marginLeft = '20px';
 
-                div.appendChild(label2);
-                div.appendChild(input2);
-            } else { // Other 단어
-                const label2 = document.createElement('label');
-                label2.textContent = `조사 선택:`;
-                label2.style.display = 'block';
-                label2.style.marginLeft = '20px';
+            div.appendChild(label2);
+            div.appendChild(input2);
+        } else { // Other 단어
+            // Create the container for the label and select
+            const divContainer = document.createElement('div');
+            divContainer.className = 'label-select-container';
 
-                const select = document.createElement('select');
-                select.className = 'particle-select';
-                select.style.marginLeft = '20px';
-                const options = ['이/가', '은/는', '을/를'];
-                options.forEach(option => {
-                    const opt = document.createElement('option');
-                    opt.value = option;
-                    opt.textContent = option;
-                    select.appendChild(opt);
-                });
+            const label2 = document.createElement('label');
+            label2.textContent = `조사 선택:`;
 
-                div.appendChild(label2);
-                div.appendChild(select);
-            }
+            const select = document.createElement('select');
+            select.className = 'particle-select';
+            const options = ['이/가', '은/는', '을/를'];
+            options.forEach(option => {
+                const opt = document.createElement('option');
+                opt.value = option;
+                opt.textContent = option;
+                select.appendChild(opt);
+            });
 
-            diceContainer.appendChild(div);
+            // Append label and select to the container
+            divContainer.appendChild(label2);
+            divContainer.appendChild(select);
+            div.appendChild(divContainer);
         }
+
+        diceContainer.appendChild(div);
     }
+}
 
     // Function to determine if the last character of a string is a consonant or vowel
     function endsWithConsonant(word) {
