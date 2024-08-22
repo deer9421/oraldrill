@@ -181,16 +181,15 @@
 
     // Function to roll the dice and display the results
     function rollDice() {
-        const wordInputs = document.querySelectorAll('.word-input');
-        const results = [];
+    const wordInputs = document.querySelectorAll('.word-input');
+    const results = [];
 
-        wordInputs.forEach((input, index) => {
-            const word = input.value.trim();
-            let result = '';
+    wordInputs.forEach((input, index) => {
+        const words = input.value.split(',').map(word => word.trim()).filter(word => word);
+        words.forEach((word) => {
+            let result = word;
 
             if (word) {
-                result += word;
-
                 if (index === wordInputs.length - 1) { // Last 단어
                     const isQuestion = document.querySelector('.question-checkbox').checked;
                     result += isQuestion ? '?' : '.';
@@ -215,11 +214,12 @@
                 results.push("입력된 단어가 없습니다");
             }
         });
+    });
 
-        document.getElementById('result').textContent = `결과: ${results.join(' ')}`;
-        rollCounter++;
-        document.getElementById('counter').textContent = `Roll Count: ${rollCounter}`;
-    }
+    document.getElementById('result').textContent = `결과: ${results.join(' ')}`;
+    rollCounter++;
+    document.getElementById('counter').textContent = `Roll Count: ${rollCounter}`;
+}
 
     // Function to reset the dice configuration and roll counter
     function resetDice() {
