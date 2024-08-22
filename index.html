@@ -92,18 +92,24 @@
             div.className = 'words-input';
 
             const label1 = document.createElement('label');
-            label1.textContent = `칸 ${i + 1} - 단어:`;
+            label1.textContent = `단어 ${i + 1}:`;
             const input1 = document.createElement('input');
             input1.type = 'text';
             input1.className = 'word-input';
             input1.placeholder = '여기에 단어를 입력하세요';
 
             const label2 = document.createElement('label');
-            label2.textContent = `칸 ${i + 1} - 조사, 문장부호:`;
+            label2.textContent = `조사, 문장부호:`;
+            label2.style.fontSize = '0.9em'; // Make the text smaller
+            label2.style.display = 'block';  // Ensure the label is displayed as a block element to control margin and padding
+            label2.style.marginLeft = '20px'; // Indent the label
+            
             const input2 = document.createElement('input');
             input2.type = 'text';
             input2.className = 'suffix-input';
             input2.placeholder = '여기에 조사, 문장부호를 입력하세요';
+            input2.style.marginLeft = '20px'; // Indent the input to align with the label
+            input2.style.width = 'calc(100% - 40px)'; // Adjust width to account for the indentation
 
             div.appendChild(label1);
             div.appendChild(input1);
