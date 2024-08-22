@@ -6,57 +6,81 @@
     <title>Dice Roller</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            width: 90%;
-            max-width: 600px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            margin-top: 50px;
-            border-radius: 10px;
-        }
-        label, button {
-            font-size: 1.5em;
-        }
-        input[type="number"], input[type="text"], select {
-            font-size: 1.5em;
-            padding: 10px;
-            margin: 10px 0;
-            width: 100%;
-        }
-        .words-input {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .result {
-            font-size: 1.8em;
-            margin-top: 20px;
-            color: #007BFF;
-        }
-        .counter {
-            font-size: 1.2em;
-            color: #555;
-            margin-top: 10px;
-        }
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 90%;
+    max-width: 600px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+    border-radius: 10px;
+}
+
+label, button {
+    font-size: 1.5em;
+}
+
+input[type="number"], input[type="text"], select {
+    font-size: 1.5em;
+    padding: 10px;
+    margin: 10px 0;
+    width: 100%;
+}
+
+.words-input {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.result {
+    font-size: 1.8em;
+    margin-top: 20px;
+    color: #007BFF;
+}
+
+.counter {
+    font-size: 1.2em;
+    color: #555;
+    margin-top: 10px;
+}
+
+/* New styles to fit label and dropdown on one line */
+.label-select-container {
+    display: flex;
+    align-items: center;
+}
+
+.label-select-container label {
+    font-size: 1.2em; /* Make the label slightly smaller to fit */
+    margin-right: 10px; /* Add some space between the label and the select box */
+}
+
+.label-select-container select {
+    width: auto; /* Allow the select box to auto-size */
+    flex-grow: 1; /* Make the select box take up remaining space */
+    min-width: 100px; /* Ensure the select box has a minimum width */
+}
     </style>
 </head>
 <body>
