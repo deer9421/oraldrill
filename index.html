@@ -103,7 +103,7 @@
 
             if (i === numDice - 1) { // Last 단어
                 const label2 = document.createElement('label');
-                label2.textContent = `질문형:`;
+                label2.textContent = `질문형 포함:`;
                 label2.style.display = 'block';
                 label2.style.marginLeft = '20px';
 
@@ -159,10 +159,16 @@ function rollDice() {
             const selectedWord = words[Math.floor(Math.random() * words.length)];
             result += selectedWord;
 
-            if (index === wordInputs.length - 1) { // Last 단어
-                const isQuestion = document.querySelector('.question-checkbox').checked;
-                result += isQuestion ? '?' : '.';
-            } else { // Other 단어
+        if (index === wordInputs.length - 1) { // Last 단어
+            const isQuestion = document.querySelector('.question-checkbox').checked;
+            if (isQuestion) {
+                // Randomly choose '.' or '?' with a 4:1 ratio
+                const randomValue = Math.random();
+                result += randomValue < 0.8 ? '.' : '?'; // 80% chance for '.', 20% chance for '?'
+            } else {
+                result += '.';
+            }
+        }     else { // Other 단어
                 const particleSelect = document.querySelectorAll('.particle-select')[index];
                 const particleOption = particleSelect.value;
                 let particle = '';
