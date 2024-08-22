@@ -25,7 +25,7 @@
         label, button {
             font-size: 1.5em;
         }
-        input[type="number"], input[type="text"] {
+        input[type="number"], input[type="text"], select {
             font-size: 1.5em;
             padding: 10px;
             margin: 10px 0;
@@ -98,49 +98,89 @@
             input1.className = 'word-input';
             input1.placeholder = '여기에 단어를 입력하세요';
 
-            const label2 = document.createElement('label');
-            label2.textContent = `조사, 문장부호:`;
-            label2.style.fontSize = '0.9em'; // Make the text smaller
-            label2.style.display = 'block';  // Ensure the label is displayed as a block element to control margin and padding
-            label2.style.marginLeft = '20px'; // Indent the label
-            
-            const input2 = document.createElement('input');
-            input2.type = 'text';
-            input2.className = 'suffix-input';
-            input2.placeholder = '여기에 조사, 문장부호를 입력하세요';
-            input2.style.marginLeft = '20px'; // Indent the input to align with the label
-            input2.style.width = 'calc(100% - 40px)'; // Adjust width to account for the indentation
-
             div.appendChild(label1);
             div.appendChild(input1);
-            div.appendChild(label2);
-            div.appendChild(input2);
+
+            if (i === numDice - 1) { // Last 단어
+                const label2 = document.createElement('label');
+                label2.textContent = `질문형:`;
+                label2.style.display = 'block';
+                label2.style.marginLeft = '20px';
+
+                const input2 = document.createElement('input');
+                input2.type = 'checkbox';
+                input2.className = 'question-checkbox';
+                input2.style.marginLeft = '20px';
+
+                div.appendChild(label2);
+                div.appendChild(input2);
+            } else { // Other 단어
+                const label2 = document.createElement('label');
+                label2.textContent = `조사 선택:`;
+                label2.style.display = 'block';
+                label2.style.marginLeft = '20px';
+
+                const select = document.createElement('select');
+                select.className = 'particle-select';
+                select.style.marginLeft = '20px';
+                const options = ['이/가', '은/는', '을/를'];
+                options.forEach(option => {
+                    const opt = document.createElement('option');
+                    opt.value = option;
+                    opt.textContent = option;
+                    select.appendChild(opt);
+                });
+
+                div.appendChild(label2);
+                div.appendChild(select);
+            }
+
             diceContainer.appendChild(div);
         }
+    }
+
+    // Function to determine if the last character of a string is a consonant or vowel
+    function endsWithConsonant(word) {
+        const code = word.charCodeAt(word.length - 1) - 0xAC00;
+        const jong = code % 28;
+        return jong !== 0; // If there's a final consonant (종성), jong will not be 0
     }
 
     // Function to roll the dice and display the results
     function rollDice() {
         const wordInputs = document.querySelectorAll('.word-input');
-        const suffixInputs = document.querySelectorAll('.suffix-input');
         const results = [];
 
         wordInputs.forEach((input, index) => {
-            const words = input.value.split(',').map(word => word.trim()).filter(word => word);
-            const suffixes = suffixInputs[index].value.split(',').map(suffix => suffix.trim()).filter(suffix => suffix);
+            const word = input.value.trim();
             let result = '';
 
-            if (words.length > 0) {
-                result += words[Math.floor(Math.random() * words.length)];
+            if (word) {
+                result += word;
+
+                if (index === wordInputs.length - 1) { // Last 단어
+                    const isQuestion = document.querySelector('.question-checkbox').checked;
+                    result += isQuestion ? '?' : '.';
+                } else { // Other 단어
+                    const particleSelect = document.querySelectorAll('.particle-select')[index];
+                    const particleOption = particleSelect.value;
+                    let particle = '';
+
+                    if (particleOption === '이/가') {
+                        particle = endsWithConsonant(word) ? '이' : '가';
+                    } else if (particleOption === '은/는') {
+                        particle = endsWithConsonant(word) ? '은' : '는';
+                    } else if (particleOption === '을/를') {
+                        particle = endsWithConsonant(word) ? '을' : '를';
+                    }
+
+                    result += particle;
+                }
+
+                results.push(result);
             } else {
-                result += "입력된 단어가 없습니다";
+                results.push("입력된 단어가 없습니다");
             }
-
-            if (suffixes.length > 0) {
-                result += suffixes[Math.floor(Math.random() * suffixes.length)];
-            }
-
-            results.push(result);
         });
 
         document.getElementById('result').textContent = `결과: ${results.join(' ')}`;
