@@ -152,9 +152,10 @@
         const results = [];
 
         wordInputs.forEach((input, index) => {
-            const word = input.value.trim();
-            let result = '';
-
+           const words = input.value.split(',').map(word => word.trim()).filter(word => word);
+           const suffixes = suffixInputs[index].value.split(',').map(suffix => suffix.trim()).filter(suffix => suffix);
+           let result = '';
+            
             if (word) {
                 result += word;
 
