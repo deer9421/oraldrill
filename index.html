@@ -147,47 +147,47 @@
     }
 
     // Function to roll the dice and display the results
-    function rollDice() {
-        const wordInputs = document.querySelectorAll('.word-input');
-        const results = [];
+function rollDice() {
+    const wordInputs = document.querySelectorAll('.word-input');
+    const results = [];
 
-        wordInputs.forEach((input, index) => {
-           const words = input.value.split(',').map(word => word.trim()).filter(word => word);
-           const suffixes = suffixInputs[index].value.split(',').map(suffix => suffix.trim()).filter(suffix => suffix);
-           let result = '';
-            
-            if (word) {
-                result += word;
+    wordInputs.forEach((input, index) => {
+        const words = input.value.split(',').map(word => word.trim()).filter(word => word.length > 0);
+        let result = '';
 
-                if (index === wordInputs.length - 1) { // Last 단어
-                    const isQuestion = document.querySelector('.question-checkbox').checked;
-                    result += isQuestion ? '?' : '.';
-                } else { // Other 단어
-                    const particleSelect = document.querySelectorAll('.particle-select')[index];
-                    const particleOption = particleSelect.value;
-                    let particle = '';
+        if (words.length > 0) {
+            const selectedWord = words[Math.floor(Math.random() * words.length)];
+            result += selectedWord;
 
-                    if (particleOption === '이/가') {
-                        particle = endsWithConsonant(word) ? '이' : '가';
-                    } else if (particleOption === '은/는') {
-                        particle = endsWithConsonant(word) ? '은' : '는';
-                    } else if (particleOption === '을/를') {
-                        particle = endsWithConsonant(word) ? '을' : '를';
-                    }
+            if (index === wordInputs.length - 1) { // Last 단어
+                const isQuestion = document.querySelector('.question-checkbox').checked;
+                result += isQuestion ? '?' : '.';
+            } else { // Other 단어
+                const particleSelect = document.querySelectorAll('.particle-select')[index];
+                const particleOption = particleSelect.value;
+                let particle = '';
 
-                    result += particle;
+                if (particleOption === '이/가') {
+                    particle = endsWithConsonant(selectedWord) ? '이' : '가';
+                } else if (particleOption === '은/는') {
+                    particle = endsWithConsonant(selectedWord) ? '은' : '는';
+                } else if (particleOption === '을/를') {
+                    particle = endsWithConsonant(selectedWord) ? '을' : '를';
                 }
 
-                results.push(result);
-            } else {
-                results.push("입력된 단어가 없습니다");
+                result += particle;
             }
-        });
 
-        document.getElementById('result').textContent = `결과: ${results.join(' ')}`;
-        rollCounter++;
-        document.getElementById('counter').textContent = `Roll Count: ${rollCounter}`;
-    }
+            results.push(result);
+        } else {
+            results.push("입력된 단어가 없습니다");
+        }
+    });
+
+    document.getElementById('result').textContent = `결과: ${results.join(' ')}`;
+    rollCounter++;
+    document.getElementById('counter').textContent = `Roll Count: ${rollCounter}`;
+}
 
     // Function to reset the dice configuration and roll counter
     function resetDice() {
